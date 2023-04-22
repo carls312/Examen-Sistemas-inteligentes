@@ -1,0 +1,29 @@
+%mono(posicion_inicial, accion ,posicion_final)
+%estado(posicion_mono_horizontal,posicion_mono_vertical,posicion_caja,platano)
+
+%Coge platano
+mono(estado(medio, sobre_caja, medio, no_platano),coge,estado(debajo, sobre_caja, debajo, tiene_platano)).
+
+
+%Sube caja
+%funciona cuando la posicion del mono y la caja es la misma
+%No funciona cuando posicion_caja no esta en medio
+mono(estado(Posicion, suelo, Posicion, Tiene_no_tiene),sube, estado(Posicion, sobre_caja, Posicion, Tiene_no_tiene)).
+
+
+%Empuja caja
+%funciona cuando la posicion del mono y la caja es la misma
+%"resetea" posicion_mono_horizontal y posicion_caja
+mono(estado(Posicion1, suelo, Posicion1, Tiene_no_tiene),empuja, estado(P2, suelo, P2, Tiene_no_tiene)).
+
+
+%Camina mono
+%"resetea" posicion_mono_horizontal
+mono(estado(Posicion1, suelo, B, H), camina(Posicion1,P2),estado(P2, suelo, B, H)).
+
+% puedecoger(Estado): el mono puede coger el platano en Estado
+% El mono ya tiene el platano
+puedecoger(estado(_, _, _, tiene_platano)).
+%El mono no tiene el platano
+%
+puedecoger(Estado1):-mono(Estado1,_, Estado2),puedecoger(Estado2).

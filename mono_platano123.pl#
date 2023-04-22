@@ -1,0 +1,14 @@
+estado(medio,arriba_caja,medio,platano).
+estado(ventana,_,ventana,_).
+estado(ventana,_,puerta,_).
+estado(puerta,_,ventana,_).
+est
+mover(estado(A,suelo,B,no_platano), estado(A2,suelo,B,no_platano),mov(A,A2)).
+empujar(estado(A,suelo,A,no_platano), estado(A2,suelo,A2,no_platano)).
+subir((estado(A,suelo,A,no_platano)), (estado(A,sobre_caja,A,no_platano))).
+coger_platano(estado(medio,sobre_caja, medio,no_platano), estado(medio,sobre_caja,medio,tiene_platano)).
+go(estado(_,_,_,tiene_platano)).
+go(Estado1):-(Estado1,mover(Estado1,Estado2,accion)),go(Estado2).
+go(Estado1):-(Estado1,empujar(Estado1,Estado2)),go(Estado2).
+go(Estado1):-(Estado1,subir(Estado1,Estado2)),go(Estado2).
+go(Estado1):-(Estado1,coger_platano(Estado1,Estado2)),go(Estado2).
